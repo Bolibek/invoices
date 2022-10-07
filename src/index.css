@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'Spartan';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('./fonts/league-spartan-v5-latin-500.woff2') format('woff2'),
+      url('./fonts/league-spartan-v5-latin-500.woff') format('woff');
+  }
+
+  @font-face {
+    font-family: 'Spartan';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('./fonts/league-spartan-v5-latin-700.woff2') format('woff2'),
+      url('./fonts/league-spartan-v5-latin-700.woff') format('woff');
+  }
+
+  html {
+    font-family: 'Spartan', system-ui, sans-serif;
+  }
+
+  h1 {
+    @apply text-xl;
+  }
+
+  h2 {
+    @apply text-lg;
+  }
+
+  h3 {
+    @apply text-base;
+  }
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+}
