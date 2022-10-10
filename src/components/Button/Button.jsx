@@ -50,8 +50,7 @@ function Button({buttonKind, onClick, className, type, children}) {
     defaultChildren = 'Save as Draft'
   }
   if (buttonKind === addNewItem) {
-    btnClasses = `bg-[#F9FAFE] text-gray-400 py-4 px-48 rounded-[1.5rem] hover:bg-gray-200 `
-
+    btnClasses = `bg-[#F9FAFE] text-gray-400 w-[21.875rem] h-[3rem] rounded-[1.5rem] hover:bg-gray-200 `
     defaultChildren = 'Add New Item'
   }
   if (buttonKind === cancel) {

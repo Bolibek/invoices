@@ -1,4 +1,4 @@
-export default function ErrorFallback({error, resetErrorBoundary, children}) {
+export default function ErrorFallBack({error, resetErrorBoundary, children}) {
   return (
     <div role="alert">
       {error ? (

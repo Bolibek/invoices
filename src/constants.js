@@ -1,3 +1,3 @@
-const bgColor = '#F2F2F2'
-const baseUrl = 'https://serene-plains-38345.herokuapp.com/'
+const bgColor = '#F222F2'
+const baseUrl = 'http://localhost:8080'
 export {baseUrl, bgColor}

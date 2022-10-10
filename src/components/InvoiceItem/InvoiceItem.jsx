@@ -9,7 +9,6 @@ export default function InvoiceItem({
   total,
   status,
 }) {
-  const clientStatus = status.charAt(0).toUpperCase() + status.slice(1)
   const clientPaymentDue = `Due ${new Intl.DateTimeFormat('en-UK', {
     year: 'numeric',
     month: 'short',
@@ -31,9 +30,12 @@ export default function InvoiceItem({
   }
   const [bgColor, textColor, dotColor] = activeColorArr
   return (
-    <Link className="w-full bg-red " to={`/invoice/${id}`}>
-      <div className="flex justify-between items-center bg-white h-16  mb-4 px-8 text-lg rounded-xl ">
-        <span className="font-bold w-12 text-body-1  ">{id}</span>
+    <Link className="" to={`/invoice/${id}`}>
+      <div className="w-full flex justify-between items-center bg-white h-16  mb-4 px-8 text-lg rounded-xl ">
+        <span className="font-bold w-[5rem] text-body-1  ">
+          <span className=" text-gray-300">#</span>
+          {id}
+        </span>
         <span className="text-gray-300 w-24  text-body-1">
           {clientPaymentDue}
         </span>
@@ -43,13 +45,13 @@ export default function InvoiceItem({
         </span>
         <div className="flex items-center ">
           <div
-            className={`${bgColor} ${textColor} flex w-28  h-10 font-bold rounded-lg mr-5`}
+            className={`${bgColor} ${textColor} flex w-[7rem]  h-10 font-bold rounded-lg mx-5`}
           >
             <div className="flex m-auto items-center ">
               <div
                 className={`h-2 w-2 ${dotColor} mr-2 p-0.5 rounded-full`}
               ></div>
-              <span className="text-body-1">{clientStatus}</span>
+              <span className="text-body-1 capitalize">{status}</span>
             </div>
           </div>
           <span className=" text-purple font-bold  ">

@@ -2,18 +2,22 @@ import React, {useState, useEffect} from 'react'
 import {Link, useParams, useNavigate} from 'react-router-dom'
 import arrowLeft from '../../assets/icon-arrow-left.svg'
 import Button from '../../components/Button/Button.jsx'
+import FormWindow from '../../components/FormWindow/FormWindow.jsx'
 import {formatDate} from '../../utils/index'
 import {
   useInvoiceItemDetailsQuery,
   useUpdateInvoiceMutation,
+  useDeleteInvoiceMutation,
 } from '../../services/invoiceApi'
 import {constantColors} from '../../components/InvoiceItem/constantColors'
 import ItemRow from './ItemRow.jsx'
 import ErrorFallBack from '../../components/ErrorBoundaries/ErrorFallback.jsx'
 
 function InvoiceItemPage() {
-  const [isClicked, setisClicked] = useState(false)
+  const [openWindow, setOpenWindow] = useState(false)
+  const [isClicked, setIsClicked] = useState(false)
   const [error, setError] = useState(null)
+
   const {invoiceId} = useParams()
   const navigate = useNavigate()
   const {
@@ -21,10 +25,13 @@ function InvoiceItemPage() {
     isLoading,
     isSuccess,
   } = useInvoiceItemDetailsQuery(invoiceId)
+  const [deletePost] = useDeleteInvoiceMutation()
+  const [updateInvoice] = useUpdateInvoiceMutation()
   const {
+    _id,
     id,
-    createdAt,
     paymentDue,
+    createdAt,
     description,
     clientName,
     clientEmail,
@@ -34,29 +41,23 @@ function InvoiceItemPage() {
     items,
     total,
   } = data
-
-  const [updateInvoice] = useUpdateInvoiceMutation()
   useEffect(() => {
     if (isClicked === true) {
       try {
         const newData = {
           ...data,
           status: 'paid',
-          items: {
-            createdItems: [...items],
-            modifiedItems: [],
-            deletedItems: [],
-          },
         }
-        updateInvoice({id, ...newData})
+        updateInvoice({_id, ...newData})
         navigate('/')
+        window.location.reload(false)
       } catch (err) {
         setError(err)
       }
     }
-  }, [isClicked, data, updateInvoice, id, items, navigate])
+  }, [isClicked, data, _id, status])
   const handleChangeInvoiceStatus = () => {
-    setisClicked(true)
+    setTimeout(() => setIsClicked(true), 1000)
   }
 
   const resetErrorBoundary = () => {
@@ -73,11 +74,17 @@ function InvoiceItemPage() {
   if (status === 'draft') {
     activeColorArr.push(...constantColors.draft)
   }
-
   const [bgColor, textColor, dotColor] = activeColorArr
-
   return (
     <ErrorFallBack error={error} resetErrorBoundary={resetErrorBoundary}>
+      {openWindow && (
+        <FormWindow
+          setOpenWindow={setOpenWindow}
+          kindModal={'editLight'}
+          formId={id}
+          itemData={data}
+        />
+      )}
       <div className="w-full h-full overflow-x-hidden">
         {isLoading && <div>Loading</div>}
         {isSuccess && (
@@ -107,8 +114,18 @@ function InvoiceItemPage() {
                 </span>
               </div>
               <div className="flex justify-around">
-                <Button buttonKind={'editLight'} className="mr-2" />
-                <Button buttonKind={'delete'} className="mr-2" />
+                <Button
+                  buttonKind={'editLight'}
+                  className="mr-2"
+                  onClick={() => setOpenWindow(true)}
+                />
+                <Button
+                  buttonKind={'delete'}
+                  className="mr-2"
+                  onClick={() =>
+                    deletePost(invoiceId).then(() => navigate('/'))
+                  }
+                />
                 <Button
                   buttonKind={'markAsPaid'}
                   className="mr-6"
@@ -189,7 +206,7 @@ function InvoiceItemPage() {
                   </span>
                   <div className="flex justify-between w-1/2">
                     <span className="uppercase text-gray-400 my-3 ml-3">
-                      qity
+                      qty
                     </span>
                     <span className="capitalize text-gray-400 my-3 mr-[0.6rem]">
                       price
@@ -197,13 +214,13 @@ function InvoiceItemPage() {
                     <span className="capitalize text-gray-400 my-3">total</span>
                   </div>
                 </div>
-                <ItemRow itemData={items} />
+                <ItemRow items={items} />
               </div>
               <div className="flex justify-between bg-[#373B53] rounded-b-lg mb-1 p-6 text-white">
                 <span className="font-medium text-xs">Amount Due</span>
                 <span className="font-bold text-[1.5rem]">
                   <span className="mr-1">£</span>
-                  {total}.00
+                  {Number(total)}
                 </span>
               </div>
             </div>
