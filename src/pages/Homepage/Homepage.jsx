@@ -1,49 +1,49 @@
 import {Fragment, useState, useId, useEffect} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
 import {Menu, Transition} from '@headlessui/react'
-import Button from '../../components/Button/Button.jsx'
 import InvoiceItem from '../../components/InvoiceItem/InvoiceItem.jsx'
-import EmptyEmail from '../../assets/illustration-empty.svg'
+import FormWindow from '../../components/FormWindow/FormWindow.jsx'
+import Button from '../../components/Button/Button.jsx'
 import ArrowDownIcon from '../../assets/icon-arrow-down.svg'
 import ArrowUpIcon from '../../assets/icon-arrow-up.svg'
+import EmptyEmail from '../../assets/illustration-empty.svg'
 import {useInvoicesQuery} from '../../services/invoiceApi'
-import FormWindow from '../../components/FormWindow/FormWindow.jsx'
+import {setDatas} from '../../app/store'
 
 function Homepage() {
-  const {data, isLoading, isSuccess} = useInvoicesQuery()
-
+  const [openWindow, setOpenWindow] = useState(false)
+  const [showStatus, setShowStatus] = useState(false)
+  const statusId = useId()
   const [statusCheck, setStatusCheck] = useState({
     draft: false,
     pending: false,
     paid: false,
   })
-
-  const [datas, setDatas] = useState([])
-
-  const [openWindow, setOpenWindow] = useState(false)
-  const statusId = useId()
-  const [showStatus, setShowStatus] = useState(false)
   const allStatus = Object.keys(statusCheck)
   const chosenStatus = allStatus.filter(item => statusCheck[item])
+  const datas = useSelector(state => state.invoice.datas)
+  const dispatch = useDispatch()
+  const {data, isLoading, isSuccess} = useInvoicesQuery()
+  useEffect(() => {
+    dispatch(setDatas(data))
+    // eslint-disable-next-line
+  }, [data])
+  useEffect(() => {
+    if (!statusCheck.draft && !statusCheck.pending && !statusCheck.paid) {
+      dispatch(setDatas(datas))
+      return
+    }
+    const filtered = datas?.filter(item => statusCheck[item.status])
+    dispatch(setDatas(filtered))
+    // eslint-disable-next-line
+  }, [statusCheck])
+
   const handleChange = e => {
     setStatusCheck({
       ...statusCheck,
       [e.target.value]: !statusCheck[e.target.value],
     })
   }
-
-  useEffect(() => {
-    setDatas(data)
-  }, [data])
-
-  useEffect(() => {
-    if (!statusCheck.draft && !statusCheck.pending && !statusCheck.paid) {
-      setDatas(data)
-      return
-    }
-    const filtered = data?.filter(item => statusCheck[item.status])
-    setDatas(filtered)
-  }, [data, statusCheck])
-
   return (
     <div className="w-full h-full overflow-y-scroll px-60 ">
       {openWindow && (
@@ -121,7 +121,7 @@ function Homepage() {
       {isLoading && <h2>Loading...</h2>}
       {isSuccess &&
         datas?.map(invoice => <InvoiceItem key={invoice.id} {...invoice} />)}
-      {data && data.length === 0 && (
+      {(!data || data.length === 0) && (
         <div className="m-auto w-72  my-10 flex flex-col items-center  ">
           <img src={EmptyEmail} alt="" />
           <h2 className="text-gray-600 font-bold mt-6">

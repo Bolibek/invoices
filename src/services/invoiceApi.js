@@ -8,19 +8,41 @@ export const invoiceApi = createApi({
   }),
   tagTypes: ['Invoice'],
   endpoints: builder => ({
+    addUser: builder.mutation({
+      query: user => ({
+        url: '/signupuser',
+        method: 'POST',
+        body: user,
+      }),
+      providesTags: ['User'],
+    }),
+    myProfile: builder.query({
+      query: userId => ({
+        url: `/user/${userId}`,
+        headers: {Authorization: `Bekki ${localStorage.getItem('jwt')}`},
+      }),
+      providesTags: ['User'],
+    }),
     invoices: builder.query({
-      query: () => '/invoice',
+      query: () => ({
+        url: '/invoice',
+        headers: {Authorization: `Bekki ${localStorage.getItem('jwt')}`},
+      }),
       providesTags: ['Invoice'],
     }),
 
     invoiceItemDetails: builder.query({
-      query: invoiceId => `/invoice/${invoiceId}`,
+      query: invoiceId => ({
+        url: `/invoice/${invoiceId}`,
+        headers: {Authorization: `Bekki ${localStorage.getItem('jwt')}`},
+      }),
     }),
 
     addInvoice: builder.mutation({
       query: invoice => ({
-        url: '/invoice',
+        url: '/createinvoice',
         method: 'POST',
+        headers: {Authorization: `Bekki ${localStorage.getItem('jwt')}`},
         body: invoice,
       }),
 
@@ -30,6 +52,7 @@ export const invoiceApi = createApi({
       query: ({id, ...rest}) => ({
         url: `/invoice/${id}`,
         method: 'PUT',
+        headers: {Authorization: `Bekki ${localStorage.getItem('jwt')}`},
         body: rest,
       }),
 
@@ -38,15 +61,19 @@ export const invoiceApi = createApi({
     deleteInvoice: builder.mutation({
       query: id => ({
         url: `/invoice/${id}`,
+        headers: {Authorization: `Bekki ${localStorage.getItem('jwt')}`},
         method: 'DELETE',
       }),
       invalidatesTags: ['Invoice'],
     }),
   }),
 })
+
 export const {
   useInvoicesQuery,
   useInvoiceItemDetailsQuery,
+  useMyProfileQuery,
+  useAddUserMutation,
   useAddInvoiceMutation,
   useUpdateInvoiceMutation,
   useDeleteInvoiceMutation,

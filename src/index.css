@@ -23,6 +23,7 @@
 
   html {
     font-family: 'Spartan', system-ui, sans-serif;
+    background-color: darkcyan
   }
 
   h1 {
@@ -37,6 +38,7 @@
     @apply text-base;
   }
   input[type='number']::-webkit-inner-spin-button {
+    appearance: none;
     -webkit-appearance: none;
   }
 }
