@@ -23,7 +23,12 @@
 
   html {
     font-family: 'Spartan', system-ui, sans-serif;
-    background-color: darkcyan
+    background-image: url('./assets/invoice-bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* overflow-x: hidden; */
+    /* overflow-y: hidden; */
+    /* background-color: darkcyan */
   }
 
   h1 {

@@ -32,8 +32,8 @@ export default function SignIn() {
     }
   }
   return (
-    <div className="font-mono container mt-12 mx-auto flex justify-center px-6 flex-col w-full bg-[#ffffff] p-5 rounded-lg">
-      <h2 className="pt-4 text-2xl text-center">Sign in!</h2>
+    <div className="font-mono h-[23rem] mt-10  mx-auto flex justify-center px-6 flex-col w-[27.8rem] bg-[#ffffff] p-5 rounded-lg">
+      <h2 className="pt-16 text-2xl text-center">Sign in!</h2>
       <div className="px-8 pt-6 pb-8 mb-4 w-[25rem] rounded">
         <label htmlFor="email" className="my-5">
           Email

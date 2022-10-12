@@ -17,7 +17,7 @@ const FormWindow = ({setOpenWindow, kindModal}) => {
   const [addInvoice] = useAddInvoiceMutation()
   const [defaultStatus, setDefaultStatus] = useState('pending')
   const [isDraft, setIsDraft] = useState(false)
-  const [isClicked, setIsClicked] = useState(false)
+  // eslint-disable-next-line
   const [error, setError] = useState(null)
   const navigate = useNavigate()
   const newInvoiceId = uuidv4().slice(0, 8).toUpperCase()
@@ -41,6 +41,7 @@ const FormWindow = ({setOpenWindow, kindModal}) => {
   )
   useEffect(() => {
     kindModal === 'editLight' && setItemsRow(itemsRow)
+    // eslint-disable-next-line
   }, [])
   function getScrollValue(e) {
     const scrollBottom =

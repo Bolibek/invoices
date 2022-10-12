@@ -37,6 +37,7 @@ function FormItemsRow({
         copy[id - 1] = formValue
         return copy
       })
+    // eslint-disable-next-line
   }, [formValue])
   return (
     <div id={id} className="flex mt-4 space-between">
