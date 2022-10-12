@@ -55,6 +55,7 @@ function InvoiceItemPage() {
         setError(err)
       }
     }
+    // eslint-disable-next-line
   }, [isClicked, data, _id, status])
   const handleChangeInvoiceStatus = () => {
     setTimeout(() => setIsClicked(true), 1000)

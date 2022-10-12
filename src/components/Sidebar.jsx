@@ -9,7 +9,7 @@ const Sidebar = () => {
   const navigate = useNavigate()
 
   return (
-    <div className="w-[6.5rem] fixed z-30 flex flex-wrap content-between h-full rounded-r-3xl bg-[#373B53]">
+    <div className="w-[6.5rem] relative z-30 flex flex-wrap content-between h-[100vh] rounded-r-3xl bg-[#373B53]">
       <div className="w-full h-[6.5rem] bg-purple rounded-tr-3xl flex justify-center items-center">
         <Link to={'/'}>
           <img src={logo} alt="logo" />
