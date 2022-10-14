@@ -16,7 +16,9 @@ function App() {
       className={`App relative flex flex-row font-spartan font-medium h-full w-full`}
     >
       <Sidebar />
-      <InvoiceRoutes />
+      <div className=" mx-auto">
+        <InvoiceRoutes />
+      </div>
     </div>
   )
 }

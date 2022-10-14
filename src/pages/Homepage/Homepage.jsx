@@ -45,7 +45,7 @@ function Homepage() {
     })
   }
   return (
-    <div className="w-screen h-screen overflow-auto ml-[3rem] px-52 ">
+    <div className="w-[50rem] h-screen overflow-auto  ">
       {openWindow && (
         <>
           <FormWindow setOpenWindow={setOpenWindow} />
@@ -53,8 +53,8 @@ function Homepage() {
       )}
       <div className="  flex justify-between  h-16 mt-12  items-center mb-16 ">
         <div className=" flex flex-col  ">
-          <h1 className="text-gray-600 font-bold  ">Invoices</h1>
-          <p className="text-body-1 text-gray-300 font-normal ">
+          <h1 className="text-white font-bold  ">Invoices</h1>
+          <p className="text-body-1 text-gray-200 font-normal ">
             {datas?.length > 0
               ? `There are  ${datas.length} total ${chosenStatus} ${
                   datas.length > 1 ? 'invoices' : 'invoice'
@@ -68,7 +68,7 @@ function Homepage() {
               onClick={() => setShowStatus(!showStatus)}
               className="flex items-center m-auto "
             >
-              <span className="font-bold text-body-1 text-gray-600 mr-4 ">
+              <span className="font-bold text-body-1 text-gray-100 mr-4 ">
                 Filter by status
               </span>
               <img
@@ -124,10 +124,10 @@ function Homepage() {
       {(!data || data.length === 0) && (
         <div className="m-auto w-72  my-10 flex flex-col items-center  ">
           <img src={EmptyEmail} alt="" />
-          <h2 className="text-gray-600 font-bold mt-6">
+          <h2 className="text-gray-500 font-bold mt-6">
             There is nothing here
           </h2>
-          <p className="text-body-1 text-gray-300 text-center mt-4 w-42 ">
+          <p className="text-body-1 text-gray-600 text-center mt-4 w-42 ">
             Create an invoice by clicking the
             <br />
             <span className="font-bold"> New Invoice</span> button and get
