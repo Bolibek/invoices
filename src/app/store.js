@@ -6,6 +6,7 @@ const initialState = {
   isLoggedIn: false,
   status: 'home',
   datas: [],
+  user: null,
 }
 const appSlice = createSlice({
   name: 'reducer',
@@ -17,9 +18,12 @@ const appSlice = createSlice({
     setDatas: (state, action) => {
       state.datas = action.payload // eslint-disable-line no-param-reassign
     },
+    setUser: (state, action) => {
+      state.user = action.payload // eslint-disable-line no-param-reassign
+    },
   },
 })
-export const {setIsLoggedIn, setDatas} = appSlice.actions
+export const {setIsLoggedIn, setDatas, setUser} = appSlice.actions
 const {reducer} = appSlice
 export const store = configureStore({
   reducer: {

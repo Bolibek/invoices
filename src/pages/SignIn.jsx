@@ -20,8 +20,8 @@ export default function SignIn() {
       })
         .then(res => res.json())
         .then(data => {
-          localStorage.setItem('jwt', data.token)
-          localStorage.setItem('userId', JSON.stringify(data.userId))
+          data && localStorage.setItem('jwt', data.token)
+          data && localStorage.setItem('userId', JSON.stringify(data.userId))
           data && localStorage.setItem('isLoggedIn', JSON.stringify(true))
           data && navigate('/')
           data && window.location.reload(false)

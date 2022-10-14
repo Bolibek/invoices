@@ -5,7 +5,7 @@ import moon from '../assets/icon-moon.svg'
 
 const Sidebar = () => {
   const userId = JSON.parse(localStorage.getItem('userId'))
-  const {isLoggedIn} = JSON.parse(localStorage.getItem('isLoggedIn'))
+  const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'))
   const navigate = useNavigate()
 
   return (
@@ -19,7 +19,7 @@ const Sidebar = () => {
         <div className="mb-8">
           <img src={moon} alt="img" />
         </div>
-        {(isLoggedIn !== false || isLoggedIn === true) && (
+        {isLoggedIn === true ? (
           <>
             <div className="rounded-br-3xl border-t flex py-6 px-8 justify-center items-center">
               <Link to={`./user/${userId}`}>
@@ -34,14 +34,17 @@ const Sidebar = () => {
             <div
               onClick={() => {
                 localStorage.setItem('isLoggedIn', JSON.stringify(false))
+                localStorage.removeItem('userId')
+                localStorage.removeItem('jwt')
                 window.location.reload(false)
                 navigate('/')
               }}
+              className="text-white"
             >
               <Link to={'/signup'}>Sign Out</Link>
             </div>
           </>
-        )}
+        ) : null}
       </div>
     </div>
   )
