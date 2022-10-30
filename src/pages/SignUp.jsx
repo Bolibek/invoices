@@ -21,7 +21,7 @@ export default function SignUp() {
     }
   }
   return (
-    <div className="font-mono mt-10 mx-auto flex justify-center px-6 h-[31rem] flex-col w-[27.8rem] lg:w-7/12 bg-[#ffffff] p-5 rounded-lg lg:rounded-l-none">
+    <div className="ml-[6.5rem] font-mono mt-10 mx-auto flex justify-center px-6 h-[31rem] flex-col w-[27.8rem] lg:w-7/12 bg-[#ffffff] p-5 rounded-lg lg:rounded-l-none">
       <h2 className="pt-2 text-2xl text-center">Create an Account!</h2>
       <form onSubmit={handle} className="px-8 w-[25rem] rounded flex flex-col">
         <FormInput

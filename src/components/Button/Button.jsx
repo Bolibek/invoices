@@ -17,7 +17,7 @@ const {
   addNewItem,
 } = types.types
 
-function Button({buttonKind, onClick, className, type, children}) {
+function Button({buttonKind, onClick, onSubmit, className, type, children}) {
   let btnClasses
   let defaultChildren
 
@@ -73,6 +73,7 @@ function Button({buttonKind, onClick, className, type, children}) {
     <button
       onClick={onClick}
       type={type}
+      onSubmit={onSubmit}
       className={`flex justify-around items-center font-bold text-xs ${btnClasses} ${className}`}
     >
       {defaultChildren === 'newInvoice' ? (

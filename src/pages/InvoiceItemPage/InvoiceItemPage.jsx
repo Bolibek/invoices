@@ -49,8 +49,8 @@ function InvoiceItemPage() {
           status: 'paid',
         }
         updateInvoice({_id, ...newData})
-        navigate('/')
-        window.location.reload(false)
+        isSuccess && navigate('/')
+        isSuccess && window.location.reload(false)
       } catch (err) {
         setError(err)
       }
@@ -58,7 +58,7 @@ function InvoiceItemPage() {
     // eslint-disable-next-line
   }, [isClicked, data, _id, status])
   const handleChangeInvoiceStatus = () => {
-    setTimeout(() => setIsClicked(true), 1000)
+    setIsClicked(true)
   }
 
   const resetErrorBoundary = () => {
@@ -86,7 +86,7 @@ function InvoiceItemPage() {
           itemData={data}
         />
       )}
-      <div className="w-full h-full overflow-x-hidden">
+      <div className="ml-[4rem] w-full h-full overflow-x-hidden">
         {isLoading && <div>Loading</div>}
         {isSuccess && (
           <div className="ml-[15rem] mr-[17rem] my-9">
@@ -130,7 +130,7 @@ function InvoiceItemPage() {
                 <Button
                   buttonKind={'markAsPaid'}
                   className="mr-6"
-                  onClick={() => handleChangeInvoiceStatus()}
+                  onClick={handleChangeInvoiceStatus}
                 />
               </div>
             </div>

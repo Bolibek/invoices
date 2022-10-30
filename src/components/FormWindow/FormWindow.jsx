@@ -16,7 +16,7 @@ const FormWindow = ({setOpenWindow, kindModal}) => {
   const buttonsRef = useRef(null)
   const [addInvoice] = useAddInvoiceMutation()
   const [defaultStatus, setDefaultStatus] = useState('pending')
-  const [isDraft, setIsDraft] = useState(false)
+  const [draft, setDraft] = useState('Mark as draft')
   // eslint-disable-next-line
   const [error, setError] = useState(null)
   const navigate = useNavigate()
@@ -57,13 +57,11 @@ const FormWindow = ({setOpenWindow, kindModal}) => {
       )
     }
   }
-  const handleChangeStatusToDraft = () => {
-    setDefaultStatus('draft')
-    setIsDraft(true)
-  }
+  // const handleChangeStatusToDraft = () => {
+  //   handle()
+  // }
   const handle = async e => {
     e.preventDefault()
-    isDraft && handleChangeStatusToDraft()
     try {
       if (kindModal === 'editLight') {
         const newData = {
@@ -115,14 +113,15 @@ const FormWindow = ({setOpenWindow, kindModal}) => {
           description: e.target[12].value,
           items: itemsRow,
         }).unwrap()
-        setDefaultStatus('')
-        setIsDraft(false)
+        setDefaultStatus('pending')
+        setDraft('Mark as draft')
       }
     } catch (err) {
       setError(err)
     }
     setOpenWindow(false)
   }
+
   function BottomModal() {
     return kindModal === 'editLight' ? (
       <div className="flex justify-between w-[30rem] ml-1">
@@ -143,15 +142,20 @@ const FormWindow = ({setOpenWindow, kindModal}) => {
         <div className="flex">
           <Button
             buttonKind={'saveAsDraftLight'}
-            type={'submit'}
-            onClick={handleChangeStatusToDraft}
-          />
-          <Button
-            buttonKind={'saveSend'}
-            type={'submit'}
-            form="formWindow"
-            className={'ml-2'}
-          />
+            onClick={() => {
+              setDefaultStatus('draft')
+              setDraft('Marked as draft')
+            }}
+          >
+            {draft}
+          </Button>
+          {draft === 'Mark as draft' && (
+            <Button
+              buttonKind={'saveSend'}
+              form="formWindow"
+              className={'ml-2'}
+            />
+          )}
         </div>
       </>
     )
@@ -159,9 +163,12 @@ const FormWindow = ({setOpenWindow, kindModal}) => {
   return (
     <div
       onScroll={getScrollValue}
-      className="absolute left-0 z-20 bg-white w-[1100px] rounded-r-3xl h-full overflow-y-scroll scroll-smooth scroll-mr-8 scroll-pr-3.5"
+      className="absolute left-0 mt-[-5rem] z-20 bg-white w-[1100px] rounded-r-3xl h-full overflow-y-scroll scroll-smooth scroll-mr-8 scroll-pr-3.5"
     >
-      <form onSubmit={handle} id="formWindow">
+      <form
+        onSubmit={defaultStatus === 'draft' ? handle : handle}
+        id="formWindow"
+      >
         <div className="pr-14 pl-40 pt-14 pb-8">
           <h1 className="font-bold">{`${
             kindModal === 'editLight' ? `Edit #${invoiceId}` : 'New Invoice'

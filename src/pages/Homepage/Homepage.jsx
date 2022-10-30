@@ -30,13 +30,13 @@ function Homepage() {
   }, [data])
   useEffect(() => {
     if (!statusCheck.draft && !statusCheck.pending && !statusCheck.paid) {
-      dispatch(setDatas(datas))
+      dispatch(setDatas(data))
       return
     }
-    const filtered = datas?.filter(item => statusCheck[item.status])
+    const filtered = data?.filter(item => statusCheck[item.status])
     dispatch(setDatas(filtered))
     // eslint-disable-next-line
-  }, [statusCheck])
+  }, [statusCheck, data])
 
   const handleChange = e => {
     setStatusCheck({
@@ -45,7 +45,7 @@ function Homepage() {
     })
   }
   return (
-    <div className="w-[50rem] h-screen overflow-auto  ">
+    <div className="ml-[6.5rem] w-[50rem] h-screen   ">
       {openWindow && (
         <>
           <FormWindow setOpenWindow={setOpenWindow} />
