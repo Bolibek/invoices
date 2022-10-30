@@ -17,11 +17,13 @@ const SignedUser = () => (
 const InvoiceRoutes = () => (
   <>
     <Sidebar />
-    <Routes>
-      <Route path="/" element={<Homepage />} />
-      <Route path="/invoice/:invoiceId" element={<InvoiceItemPage />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <div className="mr-[6.5rem]">
+      <Routes className="mr-[6.5rem]">
+        <Route path="/" element={<Homepage />} />
+        <Route path="/invoice/:invoiceId" element={<InvoiceItemPage />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
   </>
 )
 
